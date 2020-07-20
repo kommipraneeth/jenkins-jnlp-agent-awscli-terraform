@@ -1,10 +1,7 @@
-FROM jenkins/inbound-agent:4.3-4-alpine as jnlp
+FROM subodhhatkar/jenkins-jnlp-agent-openjdk:11.0.7-jre-slim-buster
 
-FROM hashicorp/terraform:0.12.26
-
-RUN apk -U add openjdk11-jre
-
-COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
-COPY --from=jnlp /usr/share/jenkins/agent.jar /usr/share/jenkins/agent.jar
-
-ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
+ARG APP=terraform
+ARG VERSION=0.12.28
+RUN curl --insecure -L https://releases.hashicorp.com/${APP}/${VERSION}/${APP}_${VERSION}_linux_amd64.zip -o /usr/local/bin/${APP}.zip \
+    && unzip /usr/local/bin/${APP}.zip -d /usr/local/bin \
+    && rm -rf /usr/local/bin/${APP}.zip
