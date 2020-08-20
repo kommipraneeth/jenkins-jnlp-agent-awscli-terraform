@@ -1,1 +1,1 @@
-# jenkins-jnlp-agent-terraform
+# jenkins-jnlp-agent-awscli-terraform
