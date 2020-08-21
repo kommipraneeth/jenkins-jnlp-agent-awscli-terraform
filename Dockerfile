@@ -17,5 +17,14 @@ RUN wget https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/${I
     chmod +x ${IAM_AUTH_APP} && \
     mv ${IAM_AUTH_APP} /usr/local/bin/${IAM_AUTH_APP}
 
+ARG TF_APP=terraform
+ARG TF_VERSION=0.12.29
+ARG TF_ARCH=linux_amd64
+RUN wget https://releases.hashicorp.com/${TF_APP}/${TF_VERSION}/${TF_APP}_${TF_VERSION}_${TF_ARCH}.zip \
+    -O ${TF_APP}.zip && \
+    unzip ${TF_APP}.zip && \
+    mv ${TF_APP} /usr/local/bin/${TF_APP} && \
+    rm -rf ${TF_APP}.zip
+
 COPY ./scripts /opt/scripts
 RUN /opt/scripts/installProviders.sh
